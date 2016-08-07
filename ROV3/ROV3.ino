@@ -5,6 +5,10 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetUdp.h>
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+#include <utility/imumaths.h>
 
 //other files in this sketch
 #include "pins.h"
@@ -30,14 +34,17 @@ int LastCommandTime = 0;   //last millis() reading when a command from the pilot
 
 void setup() {
   setupOutputPins();                //set all the outputs to be outputs and initialize most of them
-  initializeESCs(6500);             //initialize the ESCs and wait for them to arm
   Serial.begin(SERIALRATE);         //start the serial connection to the PC
-  Serial1.begin(SERIAL1RATE);       //start the serial connection to the arduIMU
   Ethernet.begin(mac, ip);          //connect the ethernet shield
   Udp.begin(localPort);             //start the UDP interface
+  if(!bno.begin()){
+    Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
+    Udp.write("BNO055 IMU failure");
+    Udp.endPacket();
+  }
+  initializeESCs(6500);             //initialize the ESCs and wait for them to arm
+  bno.setExtCrystalUse(true);       //they did this in the BNO055 example
 }
-
-
 
 
 void loop() {
@@ -61,7 +68,6 @@ void loop() {
     }
   }
   
-  
   //don't bother the sonar very often, altitude changes slowly
   if (EventTimer>NextSONread) {
     NextSONread += SONINTERVAL;
@@ -69,21 +75,16 @@ void loop() {
     else SONwatchdog *= SONARDECAY;              //otherwise slowly start pretending it's not there
   }
   
-  //don't bother the IMU too often, it has a lot to do
   if (EventTimer>NextIMUread) {               //if it's time to get new data from the IMU
     NextIMUread = (NextIMUread+IMUINTERVAL);                   //schedule the next one
-      /*this next line checks to see if the IMUwatchdog is less than 0.8, which means
-        it's been a while since the IMU communicated. if that is the case, a 'true'
-        value is passed into the IMUcommunicate() function, which tells it to re-request
-        data from the IMU. This is just in case communications with the IMU have gotten out-of-sync     */
-    if (IMUcommunicate((IMUwatchdog<0.8))) IMUwatchdog=1.0;    //if we get new data from the IMU, keep controlling based on its output
+    if (IMUcommunicate(0)){
+      IMUwatchdog=1.0;    //if we get new data from the IMU, keep controlling based on its output
+    }
     else IMUwatchdog *= IMUDECAY;                              //if we don't get data from the IMU, slowly start pretending it's not there
     YawControl();              //set the outputs for the yaw motors, trying to satisfy the external commands and the internal controls
     PitchControl();            //set the outputs for the pitch motors
     DriveControl();            //set the outputs for the drive motors
   }
-  
-  
   
   if (EventTimer>NextReport) {                //if it's time for another status report,
     NextReport += REPORTINTERVAL;               //schedule the next one
@@ -119,21 +120,16 @@ void serialReport() {
 }
 
 
-
 int SonarCommunicate(){
   return 0;
 }
 
 
-
-
-
-
 void YawControl(){
-  const float Kpr = 4.0;
-  const float Kde = 12.0;
-  const float Kin = 0.4/1000.0; //divide by 1000 because time is in ms
-  const float integralSaturation = 100.0/Kin; //numerator is the max that we want the contribution to be AFTER multiplying by Kin
+  const float Kpr = 4.0;        //proportional gain
+  const float Kde = 12.0;       //derivative gain
+  const float Kin = 0.4/1000.0; //integral gain; divide by 1000 because time is in ms
+  const float integralSaturation = 100.0/Kin; //numerator is the max that we want the integral contribution to be AFTER multiplying by Kin
   static float integratedErr = 0.0;
   static int oldcmd;
   int cmd;
@@ -143,7 +139,7 @@ void YawControl(){
   else if (integratedErr < -integralSaturation) integratedErr = -integralSaturation;
   if(err < -180.0) err+=360.0;
   else if (err > 180.0) err-=360.0;
-  cmd = round(Kpr*err - Kde*YPR[3] + Kin*integratedErr);
+  cmd = round(Kpr*err - Kde*dYPR[0] + Kin*integratedErr);
   if(cmd>0) cmd+=DEDZONESC;
   else cmd-=DEDZONESC;
   cmd = constrain(cmd, -YAWSATURATION, YAWSATURATION);
@@ -155,13 +151,11 @@ void YawControl(){
 }
 
 
-
-
 void PitchControl(){
-  const float Kpr = 8.0;
-  const float Kde = 18.0;
-  const float Kin = 10.0/1000.0; //divide by 1000 because time is in ms
-  const float integralSaturation = 250.0/Kin; //numerator is the max that we want the contribution to be AFTER multiplying by Kin
+  const float Kpr = 8.0;         //proportional gain
+  const float Kde = 18.0;        //derivative gain
+  const float Kin = 10.0/1000.0; //integral gain; divide by 1000 because time is in ms
+  const float integralSaturation = 250.0/Kin; //numerator is the max that we want the integral contribution to be AFTER multiplying by Kin
   static float integratedErr = 0.0;
   static int oldcmd;
   int cmd;
@@ -169,7 +163,7 @@ void PitchControl(){
   integratedErr += err*IMUINTERVAL;
   if (integratedErr > integralSaturation) integratedErr = integralSaturation;
   else if (integratedErr < -integralSaturation) integratedErr = -integralSaturation;
-  cmd = round(Kpr*err - Kde*YPR[4] + Kin*integratedErr);
+  cmd = round(Kpr*err - Kde*dYPR[1] + Kin*integratedErr);
   if(cmd>0) cmd+=DEDZONESC;
   else cmd-=DEDZONESC;
   cmd = constrain(cmd, -PITCHSATURATION, PITCHSATURATION);
@@ -179,8 +173,6 @@ void PitchControl(){
   PitchBow.write(OFFSIGESC-cmd);
   PitchStern.write(OFFSIGESC+cmd);
 }
-
-
 
 
 void DriveControl(){
