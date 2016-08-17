@@ -55,13 +55,13 @@ void setupOutputPins(){
   digitalWrite(LIGHTPOWPIN1, HIGH);  //  |
   digitalWrite(LIGHTPOWPIN2, HIGH);  //  |
   digitalWrite(LIGHTPOWPIN3, HIGH);  // /
-  digitalWrite(BOWPOWPIN1, LOW);    //start with motors off
-  digitalWrite(STERNPOWPIN1, LOW);    //  |
+  digitalWrite(BOWPOWPIN1, HIGH);    //start with motors off
+  digitalWrite(STERNPOWPIN1, HIGH);    //  |
   digitalWrite(BOWPOWPIN2, HIGH);    //  |
   digitalWrite(STERNPOWPIN2, HIGH);    //  |
   digitalWrite(ESCPOWPIN4, HIGH);    //  |
   digitalWrite(ESCPOWPIN5, HIGH);    //  /
   digitalWrite(SONARPOWPIN, HIGH);   //start with sonar off
   digitalWrite(CAMPOWPIN, HIGH);     //start with cameras off
-  //digitalWrite(IMURESETPIN, HIGH);  //don't know whether high or low resets...
+  digitalWrite(IMURESETPIN, HIGH);   //low resets IMU
 }
