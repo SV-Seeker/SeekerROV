@@ -3,8 +3,8 @@
 namespace NCommManager
 {
     // Initialize variables
-    CCommand	m_currentCommand;
-    boolean		m_isCommandAvailable = false;
+    CCommand    m_currentCommand;
+    boolean        m_isCommandAvailable = false;
 
     void Initialize()
     {

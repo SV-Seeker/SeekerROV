@@ -6,8 +6,8 @@
 class CBNO055 : public CModule
 {
 public:
-	void Initialize();
-	void Update( CCommand& commandIn );
+    void Initialize();
+    void Update( CCommand& commandIn );
 };
 
 

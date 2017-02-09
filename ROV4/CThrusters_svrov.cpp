@@ -26,10 +26,10 @@ namespace
     CMotor starboard_forward_motor( STARBOARD_FORWARD_PIN );
     CMotor starboard_aft_motor( STARBOARD_AFT_PIN );
 
-    int new_pf	= MOTOR_TARGET_NEUTRAL_US;
-    int new_pa	= MOTOR_TARGET_NEUTRAL_US;
-    int new_sf	= MOTOR_TARGET_NEUTRAL_US;
-    int new_sa	= MOTOR_TARGET_NEUTRAL_US;
+    int new_pf    = MOTOR_TARGET_NEUTRAL_US;
+    int new_pa    = MOTOR_TARGET_NEUTRAL_US;
+    int new_sf    = MOTOR_TARGET_NEUTRAL_US;
+    int new_sa    = MOTOR_TARGET_NEUTRAL_US;
     int new_v = MOTOR_TARGET_NEUTRAL_US;
     int new_st = 0; //strafe differential
     int pf = MOTOR_TARGET_NEUTRAL_US;

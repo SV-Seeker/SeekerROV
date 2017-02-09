@@ -26,6 +26,6 @@ boolean CTimer::HasElapsed( uint32_t msIn )
 
 void CTimer::Reset()
 {
-    m_startTimeMs	= Now();
-    m_lastTimeMs	= m_startTimeMs;
+    m_startTimeMs    = Now();
+    m_lastTimeMs    = m_startTimeMs;
 }

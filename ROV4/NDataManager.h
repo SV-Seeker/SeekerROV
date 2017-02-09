@@ -24,14 +24,14 @@ struct TEnvironmentData
 
 struct TCapeData
 {
-    double FMEM;	// Free memory on the Arduino in bytes
-    double VOUT;	// Voltage as meassed at the cape in milli-volts
-    double IOUT;	// Current measured in to the cape in milli-amps.
-    double BTTI;	// Current draw from both battery banks
-    double ATMP;	// Arduino internal temp in Celsius (should not get above ~86)
-    double UTIM;	// Up-time since Arduino was started in milliseconds
+    double FMEM;    // Free memory on the Arduino in bytes
+    double VOUT;    // Voltage as meassed at the cape in milli-volts
+    double IOUT;    // Current measured in to the cape in milli-amps.
+    double BTTI;    // Current draw from both battery banks
+    double ATMP;    // Arduino internal temp in Celsius (should not get above ~86)
+    double UTIM;    // Up-time since Arduino was started in milliseconds
 
-    String VER;		// Version number of the OpenRov firmware
+    String VER;        // Version number of the OpenRov firmware
 };
 
 struct TThrusterData

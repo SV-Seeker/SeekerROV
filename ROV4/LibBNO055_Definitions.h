@@ -125,131 +125,131 @@
 // Enumerations
 namespace bosch
 {
-	// ACC Full Scale
-	enum Ascale
-	{
-		AFS_2G = 0,
-		AFS_4G,
-		AFS_8G,
-		AFS_18G
-	};
+    // ACC Full Scale
+    enum Ascale
+    {
+        AFS_2G = 0,
+        AFS_4G,
+        AFS_8G,
+        AFS_18G
+    };
 
-	// ACC Bandwidth
-	enum Abw
-	{
-		ABW_7_81Hz = 0,
-		ABW_15_63Hz,
-		ABW_31_25Hz,
-		ABW_62_5Hz,
-		ABW_125Hz,
-		ABW_250Hz,
-		ABW_500Hz,
-		ABW_1000Hz,
-	};
+    // ACC Bandwidth
+    enum Abw
+    {
+        ABW_7_81Hz = 0,
+        ABW_15_63Hz,
+        ABW_31_25Hz,
+        ABW_62_5Hz,
+        ABW_125Hz,
+        ABW_250Hz,
+        ABW_500Hz,
+        ABW_1000Hz,
+    };
 
-	// ACC Pwr Mode
-	enum APwrMode
-	{
-		NormalA = 0,
-		SuspendA,
-		LowPower1A,
-		StandbyA,
-		LowPower2A,
-		DeepSuspendA
-	};
+    // ACC Pwr Mode
+    enum APwrMode
+    {
+        NormalA = 0,
+        SuspendA,
+        LowPower1A,
+        StandbyA,
+        LowPower2A,
+        DeepSuspendA
+    };
 
-	// gyro full scale
-	enum Gscale
-	{
-		GFS_2000DPS = 0,
-		GFS_1000DPS,
-		GFS_500DPS,
-		GFS_250DPS,
-		GFS_125DPS
-	};
+    // gyro full scale
+    enum Gscale
+    {
+        GFS_2000DPS = 0,
+        GFS_1000DPS,
+        GFS_500DPS,
+        GFS_250DPS,
+        GFS_125DPS
+    };
 
-	// GYR Pwr Mode
-	enum GPwrMode
-	{
-		NormalG = 0,
-		FastPowerUpG,
-		DeepSuspendedG,
-		SuspendG,
-		AdvancedPowerSaveG
-	};
+    // GYR Pwr Mode
+    enum GPwrMode
+    {
+        NormalG = 0,
+        FastPowerUpG,
+        DeepSuspendedG,
+        SuspendG,
+        AdvancedPowerSaveG
+    };
 
-	// gyro bandwidth
-	enum Gbw
-	{
-		GBW_523Hz = 0,
-		GBW_230Hz,
-		GBW_116Hz,
-		GBW_47Hz,
-		GBW_23Hz,
-		GBW_12Hz,
-		GBW_64Hz,
-		GBW_32Hz
-	};
+    // gyro bandwidth
+    enum Gbw
+    {
+        GBW_523Hz = 0,
+        GBW_230Hz,
+        GBW_116Hz,
+        GBW_47Hz,
+        GBW_23Hz,
+        GBW_12Hz,
+        GBW_64Hz,
+        GBW_32Hz
+    };
 
-	// BNO-55 operation modes
-	enum OPRMode
-	{
-		CONFIGMODE = 0x00,
+    // BNO-55 operation modes
+    enum OPRMode
+    {
+        CONFIGMODE = 0x00,
 
-		// Sensor Mode
-		ACCONLY,
-		MAGONLY,
-		GYROONLY,
-		ACCMAG,
-		ACCGYRO,
-		MAGGYRO,
-		AMG,
+        // Sensor Mode
+        ACCONLY,
+        MAGONLY,
+        GYROONLY,
+        ACCMAG,
+        ACCGYRO,
+        MAGGYRO,
+        AMG,
 
-		// Fusion Mode
-		IMU,
-		COMPASS,
-		M4G,
-		NDOF_FMC_OFF,
-		NDOF
-	};
+        // Fusion Mode
+        IMU,
+        COMPASS,
+        M4G,
+        NDOF_FMC_OFF,
+        NDOF
+    };
 
-	enum PWRMode
-	{
-		Normalpwr = 0,
-		Lowpower,
-		Suspendpwr
-	};
+    enum PWRMode
+    {
+        Normalpwr = 0,
+        Lowpower,
+        Suspendpwr
+    };
 
-	// magnetometer output data rate
-	enum Modr
-	{
-		MODR_2Hz = 0,
-		MODR_6Hz,
-		MODR_8Hz,
-		MODR_10Hz,
-		MODR_15Hz,
-		MODR_20Hz,
-		MODR_25Hz,
-		MODR_30Hz
-	};
+    // magnetometer output data rate
+    enum Modr
+    {
+        MODR_2Hz = 0,
+        MODR_6Hz,
+        MODR_8Hz,
+        MODR_10Hz,
+        MODR_15Hz,
+        MODR_20Hz,
+        MODR_25Hz,
+        MODR_30Hz
+    };
 
-	// MAG Op Mode
-	enum MOpMode
-	{
-		LowPower = 0,
-		Regular,
-		EnhancedRegular,
-		HighAccuracy
-	};
+    // MAG Op Mode
+    enum MOpMode
+    {
+        LowPower = 0,
+        Regular,
+        EnhancedRegular,
+        HighAccuracy
+    };
 
-	// MAG power mode
-	enum MPwrMode
-	{
-		Normal = 0,
-		Sleep,
-		Suspend,
-		ForceMode
-	};
+    // MAG power mode
+    enum MPwrMode
+    {
+        Normal = 0,
+        Sleep,
+        Suspend,
+        ForceMode
+    };
 
 
 }

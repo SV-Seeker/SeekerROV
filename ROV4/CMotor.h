@@ -7,14 +7,14 @@
 class CMotor
 {
 private:
-    CServo	m_servo;
-    int		m_motorPin;
+    CServo    m_servo;
+    int        m_motorPin;
 
 public:
-    float	m_positiveModifier;
-    float	m_negativeModifier;
-    int		m_positiveDeadzoneBuffer;
-    int		m_negativeDeadzoneBuffer;
+    float    m_positiveModifier;
+    float    m_negativeModifier;
+    int        m_positiveDeadzoneBuffer;
+    int        m_negativeDeadzoneBuffer;
 
 
     CMotor( int motorPinIn );

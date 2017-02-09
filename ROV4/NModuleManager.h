@@ -11,7 +11,7 @@
 namespace NModuleManager
 {
     // Attributes
-    extern int		m_moduleCount;
+    extern int        m_moduleCount;
     extern CModule* m_pModules[ MAX_MODULES ];
 
     // Methods
